@@ -21,13 +21,13 @@ import axios from "axios";
 import { useEffect } from "react";
 
 const secureReq = axios.create({
-  baseURL: "https://api-repliq-commerce.vercel.app",
+  baseURL: "http://localhost:5000",
 });
 
 const useServerSecure = () => {
   useEffect(() => {
     secureReq.interceptors.request.use((req) => {
-      const token = localStorage.getItem("RepliqCommerceToken");
+      const token = localStorage.getItem("FastestFoodToken");
       if (token) {
         req.headers.Authorization = `Bearer ${token}`;
       }

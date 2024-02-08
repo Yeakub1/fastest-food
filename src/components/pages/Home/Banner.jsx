@@ -55,13 +55,13 @@ const Banner = () => {
               image={image1}
               title={"Strawberries"}
               description={"Fresh Strawberries"}
-              price={2.2}
+              price={100}
             />
             <BannerIemsCard
               image={image3}
               title={"Creamistry"}
               description={"Ice Cream "}
-              price={2.2}
+              price={85}
             />
             <BannerIemsCard
               image={image2}
@@ -73,7 +73,7 @@ const Banner = () => {
               image={image5}
               title={"Strawberries"}
               description={"Fresh Strawberries"}
-              price={2.2}
+              price={120}
             />
           </div>
         </div>

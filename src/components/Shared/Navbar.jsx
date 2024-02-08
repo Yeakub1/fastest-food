@@ -71,11 +71,11 @@ const Navbar = () => {
                 <ActiveLink to="/">Home</ActiveLink>
               </li>
               <li className="">
-                <ActiveLink to="/Instructors">Menu</ActiveLink>
+                <ActiveLink to="/menu">Menu</ActiveLink>
               </li>
 
               <li>
-                <ActiveLink className="mr-3" to="/Classes">
+                <ActiveLink className="mr-3" to="/food">
                   Food
                 </ActiveLink>
               </li>
@@ -91,7 +91,7 @@ const Navbar = () => {
               {authUser ? (
                 <>
                   <li>
-                    <ActiveLink className="mr-3" to="/dashbord/">
+                    <ActiveLink className="mr-3" to="/dashboard">
                       Dashbord
                     </ActiveLink>
                   </li>
@@ -114,7 +114,6 @@ const Navbar = () => {
               ) : (
                 <ActiveLink to="/login">LogIn</ActiveLink>
               )}
-          
             </ul>
           </div>
         </div>
