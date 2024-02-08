@@ -1,30 +1,55 @@
+import toast from "react-hot-toast";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { PulseLoader } from "react-spinners";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import useBaseAPI from "../../Hooks/useAxios";
+import useAuth from "../../Hooks/useAuth";
+import PageTitle from "../../utility/PageTitle";
 
 const LogIn = () => {
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [baseApi] = useBaseAPI();
+  const { setAuthUser } = useAuth();
+  const location = useLocation();
+  const redirect = location?.state?.from || "/";
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
+  };
+
+  const onSubmit = (data) => {
+    const { password, email } = data;
+    const userInfo = {
+      password,
+      email,
     };
-    
-    const onSubmit = (form) => {
-        const email = form.email;
-        const password = form.password;
-          console.log(email, password)
-    }
+
+    baseApi.post("/auth/login", userInfo).then(({ data }) => {
+      if (data.token) {
+        setAuthUser(data.user);
+        localStorage.setItem("RepliqCommerceToken", data.token);
+        toast.success("Successfully Login!");
+        reset();
+        return navigate(redirect, { replace: true });
+      }
+      if (data.error) {
+        return toast.error(data.message);
+      } else {
+        toast.error("Something is wrong!");
+      }
+    });
+  };
+
   return (
     <div className="h-screen flex justify-center items-center">
+      <PageTitle title="Login" />
       <div className="shadow-lg rounded-lg p-10 border-[3px] border-gray-300 bg-gray-100">
         <h1 className="text-center text-3xl font-bold">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,21 +94,9 @@ const LogIn = () => {
           </div>
           <div className="w-[300px] sm:w-[400px] mt-5">
             <button
-              disabled={isLoading}
-              className={`w-full py-3 rounded-md text-white font-medium bg-orange-500 hover:bg-orange-600 duration-300 transition ease-in-out disabled:bg-[#dddddd] ${
-                isLoading ? "cursor-not-allowed" : ""
-              }`}
+              className={`w-full py-3 rounded-md text-white font-medium bg-orange-500 hover:bg-orange-600 duration-300 transition ease-in-out disabled:bg-[#dddddd]`}
             >
-              {isLoading ? (
-                <PulseLoader
-                  color="#5cd183"
-                  size={7}
-                  margin={4}
-                  speedMultiplier={0.6}
-                />
-              ) : (
-                "Login"
-              )}
+              Login
             </button>
             <p className=" text-sm mt-2 flex gap-1 justify-center">
               New to Fastest Food?

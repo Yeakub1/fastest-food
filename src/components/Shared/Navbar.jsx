@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../src/assets/images/nav-Logo.png";
 import ActiveLink from "../utility/ActiveLink";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false);
-
+  const { authUser, logout } = useAuth();
   return (
     <Headroom>
       <nav className="w-full bg-white shadow ">
@@ -87,7 +88,33 @@ const Navbar = () => {
             }`}
           >
             <ul className="items-center justify-center text-lg space-y-8 md:flex md:space-x-6 md:space-y-0 ">
-              <ActiveLink to="/login">LogIn</ActiveLink>
+              {authUser ? (
+                <>
+                  <li>
+                    <ActiveLink className="mr-3" to="/dashbord/">
+                      Dashbord
+                    </ActiveLink>
+                  </li>
+                  <li>
+                    <button onClick={logout}>Log out</button>
+                  </li>
+                  <Link
+                    to="/user-profile"
+                    className="hover-text h-10 w-10 ml-4 cursor-pointer"
+                  >
+                    <img
+                      className="w-full h-full rounded-full"
+                      src={authUser?.photo}
+                    />
+                    <span className="tooltip-text" id="left">
+                      {authUser?.name}
+                    </span>
+                  </Link>
+                </>
+              ) : (
+                <ActiveLink to="/login">LogIn</ActiveLink>
+              )}
+          
             </ul>
           </div>
         </div>

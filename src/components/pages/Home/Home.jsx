@@ -1,10 +1,12 @@
+import PageTitle from "../../utility/PageTitle";
 import Banner from "./Banner";
 
 const Home = () => {
     return (
-        <div>
-            <Banner/>
-        </div>
+      <div>
+        <PageTitle title="Home" />
+        <Banner />
+      </div>
     );
 };
 

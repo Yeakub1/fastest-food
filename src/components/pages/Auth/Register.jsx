@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { PulseLoader } from "react-spinners";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import useBaseAPI from "../../Hooks/useAxios";
+const img_hosting_token = import.meta.env.VITE_Image_Upload_Token;
+import { useNavigate } from "react-router-dom";
+import PageTitle from "../../utility/PageTitle";
 
 const Register = () => {
   const {
@@ -11,23 +15,47 @@ const Register = () => {
     formState: { errors },
   } = useForm();
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [baseApi] = useBaseAPI();
   const navigate = useNavigate();
-
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const onSubmit = (form) => {
-    const email = form.email;
-    const password = form.password;
-    const name = form.name;
-    const photo = form.photo;
-    const number = form.userPhone;
-    console.log(name, email, number, photo, password);
+  const onSubmit = (data) => {
+    const imgdata = new FormData();
+    imgdata.append("image", data.photo[0]);
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: imgdata,
+    })
+      .then((res) => res.json())
+      .then((uploadImage) => {
+        if (uploadImage.success) {
+          const imgUrl = uploadImage.data.display_url;
+          const { name, email, userPhone, password } = data;
+          const userInfo = {
+            name,
+            email,
+            userPhone: `+880${userPhone}`,
+            password,
+            photo: imgUrl,
+          };
+          console.log(userInfo);
+          baseApi.post("/auth/create-account", userInfo).then((data) => {
+            if (data.data.insertedId) {
+              reset();
+              toast.success("User Register Successfully!");
+              navigate("/login", { replace: true });
+            }
+          });
+        }
+      });
   };
+
   return (
     <div className="h-screen flex justify-center items-center">
+      <PageTitle title="Registration" />
       <div className="shadow-lg rounded-lg p-8 border-[3px] border-gray-300 bg-gray-100">
         <h1 className="text-center text-3xl font-bold">Registration</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -146,21 +174,9 @@ const Register = () => {
           </div>
           <div className="w-[300px] sm:w-[400px] mt-5">
             <button
-              disabled={isLoading}
-              className={`w-full py-3 rounded-md text-white font-medium bg-orange-500 hover:bg-orange-600 duration-300 transition ease-in-out disabled:bg-[#dddddd] ${
-                isLoading ? "cursor-not-allowed" : ""
-              }`}
+              className={`w-full py-3 rounded-md text-white font-medium bg-orange-500 hover:bg-orange-600 duration-300 transition ease-in-out disabled:bg-[#dddddd]`}
             >
-              {isLoading ? (
-                <PulseLoader
-                  color="#5cd183"
-                  size={7}
-                  margin={4}
-                  speedMultiplier={0.6}
-                />
-              ) : (
-                "Login"
-              )}
+              Login
             </button>
             <p className=" text-sm mt-2 flex gap-1 justify-center">
               Already have an account?
