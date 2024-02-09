@@ -1,6 +1,9 @@
 import { IoMenu } from "react-icons/io5";
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import ActiveLink from "../components/utility/ActiveLink";
+import { FaHome } from "react-icons/fa";
+import logo from "../assets/images/nav-Logo.png";
+
 const Dashboard = () => {
   return (
     <div className="drawer lg:drawer-open">
@@ -25,10 +28,12 @@ const Dashboard = () => {
         ></label>
         <ul className="menu p-4 w-64 bg-[#09867E]  min-h-full text-white text-lg">
           {/* Sidebar content here */}
-
+          <div className="flex justify-center items-center">
+            <img className="h-16 w-16 " src={logo} alt="" />
+          </div>
           <ActiveLink to="/dashboard/home">
             <li>
-              <p>Home</p>
+              <p>Dashboard</p>
             </li>
           </ActiveLink>
           <ActiveLink to="/dashboard/addproduct">
@@ -36,6 +41,22 @@ const Dashboard = () => {
               <p>Add Procucts</p>
             </li>
           </ActiveLink>
+          <ActiveLink to="/dashboard/add-customer">
+            <li>
+              <p>Add Customer</p>
+            </li>
+          </ActiveLink>
+          <ActiveLink to="/dashboard/customers">
+            <li>
+              <p>Customer List</p>
+            </li>
+          </ActiveLink>
+          <div className="divider"></div>
+          <li>
+            <NavLink to="/">
+              <FaHome /> Home
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>

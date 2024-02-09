@@ -9,6 +9,9 @@ import Dashboard from "../Layout/Dashboard";
 import AHome from "../components/pages/Dashboard/Home";
 import AddProduct from "../components/pages/Dashboard/AddProduct";
 import PrivateRoutes from "./PrivateRoutes";
+import CustomersList from "../components/pages/Dashboard/CustomersList";
+import AddCustomerPage from "../components/pages/Dashboard/AddCustomer";
+import CustomerDetailsPage from "../components/pages/Dashboard/CustomerDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +45,18 @@ const router = createBrowserRouter([
       {
         path: "addproduct",
         element: <AddProduct />,
+      },
+      {
+        path: "customers",
+        element: <CustomersList />,
+      },
+      {
+        path: "add-customer",
+        element: <AddCustomerPage />,
+      },
+      {
+        path: "customers/:id",
+        element: <CustomerDetailsPage />,
       },
     ],
   },
