@@ -1,7 +1,6 @@
 import toast from "react-hot-toast";
 import { createContext, useEffect, useState } from "react";
 import useServerSecure from "../Hooks/useAxiosSecure";
-// import useServerSecure from "../Hooks/useServerSecure";
 
 export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {

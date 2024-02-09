@@ -8,6 +8,7 @@ import ProfilePage from "../components/utility/ProfilePage";
 import Dashboard from "../Layout/Dashboard";
 import AHome from "../components/pages/Dashboard/Home";
 import AddProduct from "../components/pages/Dashboard/AddProduct";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoutes>
+        <Dashboard />
+      </PrivateRoutes>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

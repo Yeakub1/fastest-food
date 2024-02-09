@@ -106,9 +106,6 @@ const Navbar = () => {
                       className="w-full h-full rounded-full"
                       src={authUser?.photo}
                     />
-                    <span className="tooltip-text" id="left">
-                      {authUser?.name}
-                    </span>
                   </Link>
                 </>
               ) : (

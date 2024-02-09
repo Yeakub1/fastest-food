@@ -17,8 +17,9 @@ const ProfilePage = () => {
             </div>
           </div>
           <div className="w-full text-center">
-            <h1 className="text-2xl">{authUser?.userName}</h1>
+            <h1 className="text-2xl">{authUser?.name}</h1>
             <h1 className="text-2xl">{authUser?.userPhone}</h1>
+            <h1 className="text-2xl">{authUser?.email}</h1>
           </div>
         </div>
       </section>

@@ -5,11 +5,11 @@ const Dashboard = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center">
+      <div className="drawer-content">
         {/* Page content here */}
         <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className=" flex justify-center drawer-button lg:hidden"
         >
           <div className="btn bg-[#09867E] text-white text-2xl font-bold ">
             <IoMenu />
@@ -23,9 +23,9 @@ const Dashboard = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+        <ul className="menu p-4 w-64 bg-[#09867E]  min-h-full text-white text-lg">
           {/* Sidebar content here */}
-       
+
           <ActiveLink to="/dashboard/home">
             <li>
               <p>Home</p>
